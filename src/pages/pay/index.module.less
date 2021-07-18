@@ -1,0 +1,74 @@
+@keyframes text {
+    from{
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to{
+        opacity: 1;
+    }
+}
+.back{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(to top right,rgb(52,73,94),rgb(52,152,219));
+    .main{
+        width: 750px;
+        height: 750px;
+        background: #fff;
+        border-radius:10px;
+        box-shadow: 0px 8px 20px 2px rgb(52,73,94);
+        position: relative;
+        .left{
+            position: relative;
+            overflow: hidden;
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            z-index: 999;
+            transition: width 0.4s ease-out;
+            .img{
+                width: 750px;
+                height: 100%;
+                filter: blur(6px);
+            }
+            .name{
+                position: absolute;
+                bottom: 60px;
+                left: 15px;
+                color: #02668b;
+                font-weight: bold;
+            }
+            .price{
+                position: absolute;
+                bottom: 10px;
+                left: 15px;
+                font-size: 28px;
+                color: #3cd855;
+                animation: text 0.4s ease-out;
+            }
+        }
+        .right{
+            float: right;
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            background: #fff;
+            .img{
+                width: 250px;
+                height: 250px;
+            }
+            .weChat{
+                height: 10%;
+            }
+            .message{
+                font-size: 28px;
+            }
+        }
+    }
+}

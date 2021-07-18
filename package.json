@@ -43,12 +43,11 @@
     "@tarojs/runtime": "3.2.16",
     "@tarojs/taro": "3.2.16",
     "@types/mockjs": "^1.0.4",
-    "axios": "^0.21.1",
     "eslint-config-prettify-ts-react": "^0.1.8",
+    "hox": "^1.1.4",
     "mockjs": "^1.1.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.0",
-    "react-axios": "^2.0.5",
     "react-dom": "^17.0.0"
   },
   "devDependencies": {

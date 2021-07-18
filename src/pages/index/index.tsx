@@ -1,38 +1,71 @@
-import React from 'react'
-import { View,Picker,Text} from '@tarojs/components'
+import React,{useEffect,useState} from 'react'
+import { View,Picker, ITouchEvent} from '@tarojs/components'
 import styles from './index.module.less'
-import {Post} from 'react-axios'
-import GoodsItem from '@/modules/goods/index'
+import GoodsItem from '../../modules/goods/index'
+import useGoods from '../../tools/status'
+import { navigateTo, request } from '@tarojs/taro'
 
-export default (props)=>{
-  const MachineID = localStorage.getItem('MachineID');
+export default ()=>{
+  const MachineID = localStorage?.getItem('MachineID');
   const state = ["价格从高到低","价格从低到高","库存从多到少"];
-  function sortKind(e):void{
-    console.log(e.detail.value);
-  }
+  const {goods,setgoods,priceHight2Low,priceLow2Hight,stockHight2low}= useGoods();
+  const [refresh, setrefresh] = useState([]);
+  console.log(goods);
   
+  function sortKind(e):void{
+    let kind = e.detail.value;
+    switch(kind){
+      case 0:
+        priceHight2Low();
+        setrefresh(refresh.slice())
+        break;
+      case 1:
+        priceLow2Hight();
+        setrefresh(refresh.slice())
+        break;
+      case 2:
+        stockHight2low();
+        setrefresh(refresh.slice())
+        break;
+    }
+  }
+  async function checkSku(e:ITouchEvent,sku:number):Promise<void>{
+    let {data:{QRCodeAddress}} = await request({
+      method:"POST",
+      url:API+"/checkSkuAvailability",
+      data:{
+        sku
+      }
+    })
+    navigateTo({
+      url:`/pages/pay/index?QRCode=${QRCodeAddress}&sku=${sku}`
+    })
+  }
+  async function getGoods():Promise<void>{
+    let {data:{data}} = await request({
+      method:"POST",
+      url:API+"/getInventory",
+      data:{MachineID}
+    });
+    setgoods(data);
+  }
+  useEffect(()=>{
+    getGoods();
+  },[])
   return (
-    <View className='index'>
+    <View className={styles.mainPage}>
         <View className={styles.head}>
           <Picker mode="selector" range={state} onChange={sortKind} className={styles.sort}>排序方式</Picker>
         </View>
-        <main>
-          <Post url="/api/getInventory" params={{MachineID}} >
-            {(e,res,isLoading)=>{
-              let data = res?.data.data;
-              console.log(data);
-              if(e){
-                return <Text>网络出现了错误</Text>
-              }
-              if(data){
-                  return data.map((item,index)=>{
-                    console.log(item);
-                    return <GoodsItem {...item} key={index}></GoodsItem>
-                  })
-              }
-              return <></>
-            }}
-          </Post>
+        <main className={styles.goodsList}>
+          {
+            goods?
+              goods.map((item,index)=>{
+                return <GoodsItem {...item} onClick={checkSku} key={index}></GoodsItem>
+              })
+            :
+            <></>
+          }
         </main>
     </View>
   )

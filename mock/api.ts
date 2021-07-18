@@ -1,7 +1,7 @@
-import mockjs,{Random} from 'mockjs'
+import {mock,Random} from 'mockjs'
 
 export default {
-    'POST /api/getInventory': mockjs.mock({
+    'POST /api/getInventory': mock({
         status: 200,
         info: "success",
         "data|6-30": [{
@@ -10,7 +10,12 @@ export default {
             "stock|0-8": 5,
             "price|2000-6000": 3000,
             type: "瓶装",
-            imageUrl:Random.image('200x100', '#02adea', 'Hello')
+            imageUrl:Random.image('100x200', '#02adea', 'img')
         }],
     }),
+    'POST /api/checkSkuAvailability':mock({
+        "status|1" : [200,500],
+        info : "success",
+        "QRCodeAddress" : Random.image('200x200', '#02adea', 'QR')
+    })
   }

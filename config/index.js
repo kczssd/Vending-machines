@@ -11,13 +11,9 @@ const config = {
   },
   sourceRoot: 'src',
   outputRoot: 'dist',
-  plugins: [
-    ['@tarojs/plugin-mock',{
-      host:"localhost",
-      port:9999
-    }]
-  ],
+  
   defineConstants: {
+    
   },
   alias: {
     "@": path.resolve(__dirname, "..", "src"),
@@ -69,14 +65,6 @@ const config = {
         }
       }
     },
-    devServer:{
-      proxy:{
-        '/api':{
-          target:'http://localhost:9999',
-          secure:false
-        }
-      }
-    }
   }
 }
 
