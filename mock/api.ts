@@ -4,10 +4,10 @@ export default {
     'POST /api/getInventory': mock({
         status: 200,
         info: "success",
-        "data|6-30": [{
+        "inventories|6-8": [{
             "sku|+1": 1,
             name: "可乐",
-            "stock|0-8": 5,
+            "stock|0-4": 5,
             "price|2000-6000": 3000,
             type: "瓶装",
             imageUrl:Random.image('100x200', '#02adea', 'img')

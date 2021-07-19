@@ -29,11 +29,12 @@ export default ()=>{
         break;
     }
   }
-  async function checkSku(e:ITouchEvent,sku:number):Promise<void>{
+  async function checkSku(e:ITouchEvent,sku:number,id:string):Promise<void>{
     let {data:{QRCodeAddress}} = await request({
       method:"POST",
       url:API+"/checkSkuAvailability",
       data:{
+        machineId:id,
         sku
       }
     })
@@ -42,12 +43,12 @@ export default ()=>{
     })
   }
   async function getGoods():Promise<void>{
-    let {data:{data}} = await request({
+    let {data:{inventories}} = await request({
       method:"POST",
       url:API+"/getInventory",
-      data:{MachineID}
+      data:{machineId:MachineID}
     });
-    setgoods(data);
+    setgoods(inventories);
   }
   useEffect(()=>{
     getGoods();

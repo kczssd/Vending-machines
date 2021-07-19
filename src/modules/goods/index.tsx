@@ -16,8 +16,9 @@ export default ({
   price: number;
   type: string;
   imageUrl: string;
-  onClick:(e:ITouchEvent,sku:number)=>void;
+  onClick:(e:ITouchEvent,sku:number,id:string)=>void;
 }) => {
+  const MachineID = localStorage?.getItem('MachineID');
   return (
     <View className={styles.content}>
       {
@@ -36,11 +37,11 @@ export default ({
           </View>
           <svg className={styles.nostock} width="150" height="150">
             <circle cx="75" cy="75" r="75" fill="#e4e4e4"></circle>
-            <text fill="black" x="36" y="86">无货</text>
+            <text fill="black" x="50%" y="55%">无货</text>
           </svg>
         </View>
         :
-        <View style={{height:"7.46667rem"}} onClick={(e)=>click(e,sku)}>
+        <View style={{height:"7.46667rem"}} onClick={(e)=>click(e,sku,MachineID!)}>
           <img className={styles.img} src={imageUrl} />
           <View className={styles.info}>
             <p className={styles.name}>{name}</p>
