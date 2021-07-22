@@ -3,16 +3,16 @@ import { View, Text } from '@tarojs/components'
 import useGoods from '../../tools/status'
 import weChat from '@/img/weChat.png'
 import styles from './index.module.less'
-import { connectSocket, navigateBack, useRouter } from '@tarojs/taro';
+import { connectSocket, navigateBack, navigateTo, useRouter } from '@tarojs/taro';
 
 export default function Payment(){
   const {goods}= useGoods();
-  const {params:{sku,QRCode}} = useRouter();
+  const {params:{sku,QRCode,id}} = useRouter();
   const [filish, setfilish] = useState(false)
   const productInfo = goods!.filter((item)=>item.sku===parseInt(sku as string))[0];
   async function onSocket():Promise<void>{
     let socket = await connectSocket({
-      url:`ws://47.110.77.252:8080/websocket`,
+      url:`ws://47.110.77.252:8080/websocket/${id}`,
     })
     socket.onMessage(function({data}:{data:string}){
       console.log('onMessage',data);

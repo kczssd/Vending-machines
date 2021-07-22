@@ -30,7 +30,7 @@ export default ()=>{
     }
   }
   async function checkSku(e:ITouchEvent,sku:number,id:string):Promise<void>{
-    let {data:{QRCodeAddress}} = await request({
+    let {data:{qrcodeAddress,userId}} = await request({
       method:"POST",
       url:API+"/checkSkuAvailability",
       data:{
@@ -39,7 +39,7 @@ export default ()=>{
       }
     })
     navigateTo({
-      url:`/pages/pay/index?QRCode=${QRCodeAddress}&sku=${sku}`
+      url:`/pages/pay/index?QRCode=${qrcodeAddress}&sku=${sku}&id=${userId}`
     })
   }
   async function getGoods():Promise<void>{

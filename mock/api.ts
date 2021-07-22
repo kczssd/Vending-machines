@@ -16,6 +16,6 @@ export default {
     'POST /api/checkSkuAvailability':mock({
         "status|1" : [200,500],
         info : "success",
-        "QRCodeAddress" : Random.image('200x200', '#02adea', 'QR')
+        "qrcodeAddress" : Random.image('200x200', '#02adea', 'QR')
     })
   }
