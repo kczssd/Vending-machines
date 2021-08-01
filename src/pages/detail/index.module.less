@@ -1,0 +1,81 @@
+.imgInfo{
+    width: 100vw;
+    height: 60vh;
+}
+main{
+    width: 100vw;
+    height: 40vh;
+    position: relative;
+    .title{
+        position: absolute;
+        top: 6px;
+        left: 60px;
+        h6{
+            color: #7A7693;
+            letter-spacing: 4px;
+            font-weight: normal;
+        }
+    }
+    .stock{
+        text-align: center;
+        line-height: 80px;
+        width: 100px;
+        height: 80px;
+        font-size: 30px;
+        color: #505052;
+        border: 4px solid #505052;
+        border-radius: 20px;
+        position: absolute;
+        top: 16px;
+        right: 50px;
+    }
+    .type{
+        position: absolute;
+        width: 60px;
+        // height: 140px;
+        top: 200px;
+        left: 60px;
+        &>img{
+            width: 60px;
+            height: 100px;
+            margin: 0 auto;
+        }
+        &>p{
+            font-size: 20px;
+            color: #7A7693;
+            text-align: center;
+            margin-top: -10px;
+            letter-spacing: 4px;
+        }
+    }
+    .price{
+        width: auto;
+        height: auto;
+        position: absolute;
+        right: 60px;
+        top: 220px;
+        font-size: 70px;
+        font-weight: bold;
+        &::after{
+            content: '￥';
+            font-size: 40px;
+            position: absolute;
+            top: 10px;
+            left: -50px;
+        }
+    }
+    .pay{
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        height: 100px;
+        border-radius: 32px;
+        outline: none;
+        border: none;
+        background: black;
+        color: #ffffff;
+        font-size: 60px;
+    }
+}

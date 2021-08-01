@@ -1,14 +1,14 @@
 import React,{MouseEventHandler} from "react";
 import styles from "./index.module.less";
 import { ITouchEvent, View } from "@tarojs/components";
+import { navigateTo } from "@tarojs/taro";
 export default ({
   sku,
   name,
   stock,
   price,
   type,
-  imageUrl,
-  onClick:click
+  imageUrl
 }: {
   sku: number;
   name: string;
@@ -16,44 +16,17 @@ export default ({
   price: number;
   type: string;
   imageUrl: string;
-  onClick:(e:ITouchEvent,sku:number,id:string)=>void;
 }) => {
   const MachineID = localStorage?.getItem('MachineID');
   return (
-    <View className={styles.content}>
-      {
-        stock===0?
-        <View>
-          <View className={styles.cover}>
-            <img className={styles.img} src={imageUrl} />
-            <View className={styles.info}>
-              <p className={styles.name}>{name}</p>
-              <p>
-                <span>暂无库存</span>
-                <span>{type}</span>
-              </p>
-              <span className={styles.price}>{(price/100).toFixed(2)}￥</span>
-            </View>
-          </View>
-          <svg className={styles.nostock} width="150" height="150">
-            <circle cx="75" cy="75" r="75" fill="#e4e4e4"></circle>
-            <text fill="black" x="50%" y="55%">无货</text>
-          </svg>
-        </View>
-        :
-        <View style={{height:"7.46667rem"}} onClick={(e)=>click(e,sku,MachineID!)}>
-          <img className={styles.img} src={imageUrl} />
-          <View className={styles.info}>
-            <p className={styles.name}>{name}</p>
-            <p>
-              <span>库存:{stock}</span>
-              <span>{type}</span>
-            </p>
-            <span className={styles.price}>{(price/100).toFixed(2)}￥</span>
-          </View>
-        </View>
-      }
-      
+    <View className={styles.content} onClick={()=>navigateTo({
+    url:`/pages/detail/index?sku=${sku}&name=${name}&stock=${stock}&price=${price}&type=${type}&imageUrl=${imageUrl}`
+    })}>
+      <img className={styles.img} src={imageUrl} />
+      <div className={styles.info}>
+        <span className={styles.name}>{name}</span>
+        <span className={styles.price}>￥{(price/100).toFixed(2)}</span>
+      </div>
     </View>
   );
 };

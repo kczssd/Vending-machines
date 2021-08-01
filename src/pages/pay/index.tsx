@@ -7,6 +7,7 @@ import { connectSocket, navigateBack, navigateTo, useRouter } from '@tarojs/taro
 
 export default function Payment(){
   const {goods}= useGoods();
+  console.log(goods);
   const {params:{sku,QRCode,id}} = useRouter();
   const [filish, setfilish] = useState(false)
   const productInfo = goods!.filter((item)=>item.sku===parseInt(sku as string))[0];
