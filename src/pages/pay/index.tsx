@@ -1,13 +1,12 @@
 import React,{useEffect,useState} from 'react'
 import { View, Text } from '@tarojs/components'
-import useGoods from '../../tools/status'
+import useGoods from '../../tools/goods'
 import weChat from '@/img/weChat.png'
 import styles from './index.module.less'
-import { connectSocket, navigateBack, navigateTo, useRouter } from '@tarojs/taro';
+import { connectSocket, navigateBack, useRouter } from '@tarojs/taro';
 
 export default function Payment(){
   const {goods}= useGoods();
-  console.log(goods);
   const {params:{sku,QRCode,id}} = useRouter();
   const [filish, setfilish] = useState(false)
   const productInfo = goods!.filter((item)=>item.sku===parseInt(sku as string))[0];

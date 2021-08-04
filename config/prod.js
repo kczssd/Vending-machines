@@ -3,7 +3,8 @@ module.exports = {
     NODE_ENV: '"production"'
   },
   defineConstants: {
-    API:JSON.stringify("")
+    API:JSON.stringify(""),
+    WEAPI:JSON.stringify("")
   },
   mini: {},
   h5: {

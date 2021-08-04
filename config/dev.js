@@ -9,9 +9,12 @@ module.exports = {
     }]
   ],
   defineConstants: {
-    API:JSON.stringify("/api")
+    API:JSON.stringify("/api"),
+    WEAPI:JSON.stringify("http://localhost:9999/api")
   },
-  mini: {},
+  mini: {
+    
+  },
   h5: {
     devServer:{
       proxy:{

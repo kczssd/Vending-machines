@@ -1,88 +1,88 @@
-import React,{useEffect,useState} from 'react'
-import { View,Picker, ITouchEvent, Input, Icon} from '@tarojs/components'
+import React, { useEffect, useState } from 'react'
+import { Label, Radio, RadioGroup, View,Image, Picker } from '@tarojs/components'
 import styles from './index.module.less'
 import GoodsItem from '../../modules/goods/index'
-import useGoods from '../../tools/status'
-import { navigateTo, request } from '@tarojs/taro'
-import sliders from '../../img/sliders.png'
-import slide from '../../img/slide.png'
+import useGoods from '../../tools/goods'
+import request from '../../tools/request'
+import useInfo from '../../tools/basicInfo'
+import imgArray from '../../tools/imgArray'
+import person from '../../img/person.png'
+import location from '../../img/location.png'
 
 
-export default ()=>{
-  const MachineID = localStorage?.getItem('MachineID');
-  const state = ["价格从高到低","价格从低到高","库存从多到少"];
-  const Types = ["Water","Can","Tea","Juice","milk"];
-  const showMode = ["auto","showAll","showSlide"];
-  const {goods,setgoods,priceHight2Low,priceLow2Hight,stockHight2low}= useGoods();
-  const [refresh, setrefresh] = useState([]);
-  console.log(goods);
+export default () => {
+  const [current, setcurrent] = useState(0);
+  const positionArray = ["一号机","二号机"];
+  const {MachineID,setMachineID} = useInfo();
+  const Types = ["水", "罐装", "果汁", "牛奶", "茶", "酒"];
+  const { goods, setgoods } = useGoods();
   
-  function sortKind(e):void{
-    let kind = e.detail.value;
-    switch(kind){
-      case 0:
-        priceHight2Low();
-        setrefresh(refresh.slice())
-        break;
-      case 1:
-        priceLow2Hight();
-        setrefresh(refresh.slice())
-        break;
-      case 2:
-        stockHight2low();
-        setrefresh(refresh.slice())
-        break;
-    }
-  }
-  async function getGoods():Promise<void>{
-    let {data:{inventories}} = await request({
-      method:"POST",
-      url:API+"/getInventory",
-      data:{machineId:MachineID}
-    });
+  async function getGoods(): Promise<void> {
+    let { data: { inventories } } = await request({
+      method: "POST",
+      url: "/getInventory",
+      data: { machineId: MachineID }
+    }); 
     setgoods(inventories);
   }
-  useEffect(()=>{
+  useEffect(() => {
     getGoods();
-  },[])
+  }, [MachineID])
   return (
     <View className={styles.mainPage}>
-        <View className={styles.head}>
-          <View  className={styles.search}>
-            <Icon className={styles.icon} size='20' type='search' />
-            <input className={styles.input} placeholder="Search" type='text' />
-            <Picker mode="selector" range={state} onChange={sortKind} className={styles.sort}>
-              <img src={sliders} />
-            </Picker>
-          </View>
-        </View>
-        <View className={styles.swiper}>
-          <View className={styles.content}>
-            {
-              Types.map((item,index)=>{
-                return (
-                <div key={"type"+index}>
-                  <input id={item} style={{display:'none',position:'absolute'}} type="radio" name="swiper" defaultChecked={index===0}/><label htmlFor={item} className={styles.type}>{item}</label>
-                </div>)
-                }
-              )
-            }
-          </View>
-          <Picker className={styles.slide} range={showMode} onChange={(e)=>{console.log(e);
+      <View className={styles.head}>
+        <Image mode="aspectFit" src={person} className={styles.person}></Image>
+        <View>
+          <Picker className={styles.picker} range={positionArray} onChange={(e)=>{
+            setMachineID(e.detail.value as string)
+            // getGoods();
           }}>
-            <img src={slide} />
+            <Image mode="aspectFit" src={location} className={styles.positionIcon}></Image>
+            <View className={styles.position}>{positionArray[parseInt(MachineID)]}  &gt;</View>
           </Picker>
+            <View className={styles.location}>宁静苑10舍</View>
         </View>
-        <main className={styles.goodsList}>
+      </View>
+      <View className={styles.swiper}>
+        <View className={styles.content}>
           {
-            goods?
-              goods.map((item,index)=>{
-                return <GoodsItem {...item} key={index}></GoodsItem>
-              })
+
+            Types.map((item, index) => {
+              return (
+                <RadioGroup key={"type" + index} >
+                  <Radio id={item} className={styles.radio} checked={index===current}/>
+                  <Label
+                    style={index===current?{
+                      color:'#fff',
+                      border:'2px solid #fff'
+                    }:{}}
+                    for={item}
+                    className={styles.type}
+                    onClick={(e) => {
+                      setcurrent(index);
+                    }}
+                  >
+                    <Image mode="aspectFit" className={styles.icon} src={imgArray[current === index ? 'light' : 'dark'][index]} />
+                    <View className={styles.text} style={{ display: current === index ? 'inline' : 'none' }}>{item}</View>
+                  </Label>
+                </RadioGroup>)
+            }
+            )
+          }
+        </View>
+      </View>
+      <View className={styles.goodsList}>
+        {
+          goods ?
+            goods
+            .filter(item=>item.type===current)
+            .map((item, index) => {
+              return <GoodsItem {...item} key={index}></GoodsItem>
+            })
             :
             <></>
-          }
-        </main>
+        }
+      </View>
     </View>
   )
 }
