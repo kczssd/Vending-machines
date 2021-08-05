@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {getUserProfile} from '@tarojs/taro'
+import {onLocationChange,getSetting,authorize,getUserProfile, getLocation} from '@tarojs/taro'
 import { Label, Radio, RadioGroup, View,Image, Picker } from '@tarojs/components'
 import styles from './index.module.less'
 import GoodsItem from '../../modules/goods/index'
@@ -27,8 +27,33 @@ export default () => {
     }); 
     setgoods(inventories);
   }
+  // useEffect(()=>{
+  //   getSetting({
+  //     success: function (res) {
+  //       if (!res.authSetting['scope.userLocation']) {
+  //         authorize({
+  //           scope: 'scope.userLocation',
+  //           success: function () {
+  //             getLocation({
+  //               type: 'wgs84',
+  //               success: function (res) {
+  //                 console.log(res);
+                  
+  //                 // const latitude = res.latitude
+  //                 // const longitude = res.longitude
+  //                 // const speed = res.speed
+  //                 // const accuracy = res.accuracy
+  //               }
+  //             })
+  //           }
+  //         })
+  //       }
+  //     }
+  //   })
+  // },[])
   useEffect(() => {
     getGoods();
+
   }, [MachineID])
   return (
     <View className={styles.mainPage}>
