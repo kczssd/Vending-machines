@@ -13,7 +13,7 @@ import location from '../../img/location.png'
 
 export default () => {
   const [current, setcurrent] = useState(0);
-  const positionArray = ["一号机","二号机"];
+  const positionArray = ["m100","m102"];
   const {MachineID,setMachineID} = useInfo();
   const Types = ["水", "罐装", "果汁", "牛奶", "茶", "酒"];
   const { goods, setgoods } = useGoods();
@@ -69,10 +69,10 @@ export default () => {
         }} src={Avatar} className={styles.person}></Image>
         <View>
           <Picker className={styles.picker} range={positionArray} onChange={(e)=>{
-            setMachineID(e.detail.value as string)
+            setMachineID(positionArray[e.detail.value])
           }}>
             <Image mode="aspectFit" src={location} className={styles.positionIcon}></Image>
-            <View className={styles.position}>{positionArray[parseInt(MachineID)]}  &gt;</View>
+            <View className={styles.position}>{MachineID}  &gt;</View>
           </Picker>
             <View className={styles.location}>宁静苑10舍</View>
         </View>

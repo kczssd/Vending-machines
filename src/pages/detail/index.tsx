@@ -30,7 +30,7 @@ export default () => {
         let codeData = await Taro.login();
         console.log(codeData);
         
-        let { data: { status, openid, payInfo } } = await request({
+        let { data: { status, openid, payMini } } = await request({
             method: "POST",
             url: "/getLogin",
             data: {
@@ -46,7 +46,7 @@ export default () => {
                 prepayId,
                 signType,
                 paySign
-            } = payInfo;
+            } = payMini;
             let payData = await Taro.requestPayment({
                 timeStamp:timeStamp,
                 nonceStr:nonceStr,
