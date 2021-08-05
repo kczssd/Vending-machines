@@ -12,7 +12,7 @@ const config = {
   sourceRoot: 'src',
   outputRoot: 'dist',
   defineConstants: {
-    WEAPI:JSON.stringify("https://api-dev.robitta.net")
+    WEAPI:JSON.stringify("https://api-dev.robbita.net")
   },
   alias: {
     "@": path.resolve(__dirname, "..", "src"),
