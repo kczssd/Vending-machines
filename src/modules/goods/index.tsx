@@ -3,6 +3,8 @@ import styles from "./index.module.less";
 import { View,Text,Image, Button } from "@tarojs/components";
 import { navigateTo } from "@tarojs/taro";
 import {Goods} from "../../interface/type"
+import {getPay} from '../../tools/pay'
+import useInfo from '../../tools/basicInfo'
 
 export default ({
   sku,
@@ -13,9 +15,12 @@ export default ({
   imageUrl,
   imageDetailUrl
 }: Goods) => {
+  const { MachineID } = useInfo();
   return (
     <View className={styles.content} >
-      <Image mode="widthFix" className={styles.img} src={imageUrl} />
+      <Image mode="widthFix" className={styles.img} src={imageUrl} onClick={()=>navigateTo({
+          url:`/pages/detail/index?sku=${sku}&name=${name}&stock=${stock}&price=${price}&type=${type}&imageUrl=${imageDetailUrl}`
+        })}/>
       <View className={styles.cold}>
       Cold
       </View>
@@ -27,9 +32,7 @@ export default ({
           </View>
         </View>
         <Button className={styles.buy} 
-        onClick={()=>navigateTo({
-          url:`/pages/detail/index?sku=${sku}&name=${name}&stock=${stock}&price=${price}&type=${type}&imageUrl=${imageDetailUrl}`
-        })}
+        onClick={()=>getPay(sku,MachineID)}
         >购买</Button>
       </View>
     </View>

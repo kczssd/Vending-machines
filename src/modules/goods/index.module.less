@@ -68,16 +68,11 @@
 }
 @media screen and (max-width:992px) {
     .content{
-        // width: calc(50vw - 20px);
         width: 45vw;
-        // margin: 10px;
         background-color: black;
-        // overflow: hidden;
+        overflow: hidden;
         position: relative;
         break-inside:avoid;
-        // display: flex;
-        // flex-direction: column;
-        // justify-content: space-around;
         .cold{
             position: absolute;
             top: 10px;
@@ -99,6 +94,8 @@
             margin: 10px auto;
         }
         .info{
+            page-break-inside: avoid;
+            width: 45vw;
             font-size: 18px;
             display: flex;
             justify-content: space-between;

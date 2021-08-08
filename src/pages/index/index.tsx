@@ -38,7 +38,6 @@ export default () => {
   //               type: 'wgs84',
   //               success: function (res) {
   //                 console.log(res);
-                  
   //                 // const latitude = res.latitude
   //                 // const longitude = res.longitude
   //                 // const speed = res.speed
@@ -80,7 +79,6 @@ export default () => {
       <View className={styles.swiper}>
         <View className={styles.content}>
           {
-
             Types.map((item, index) => {
               return (
                 <RadioGroup key={"type" + index} >
