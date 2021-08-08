@@ -15,12 +15,12 @@ export default ({
 }: Goods) => {
   return (
     <View className={styles.content} >
-      <Image className={styles.img} src={imageUrl} />
+      <Image mode="widthFix" className={styles.img} src={imageUrl} />
       <View className={styles.cold}>
       Cold
       </View>
       <View className={styles.info}>
-        <View>
+        <View className={styles.textGroup}>
           <Text className={styles.name}>{name}</Text>
           <View className={styles.price}>
             {(price/100).toFixed(2)}

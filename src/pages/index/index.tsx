@@ -105,17 +105,19 @@ export default () => {
           }
         </View>
       </View>
-      <View className={styles.goodsList}>
-        {
-          goods ?
-            goods
-            .filter(item=>item.type===current)
-            .map((item, index) => {
-              return <GoodsItem {...item} key={index}></GoodsItem>
-            })
-            :
-            <></>
-        }
+      <View className={styles.goodsContent}>
+        <View className={styles.goodsList}>
+          {
+            goods ?
+              goods
+              .filter(item=>item.type===current)
+              .map((item, index) => {
+                return <GoodsItem {...item} key={index}></GoodsItem>
+              })
+              :
+              <></>
+          }
+        </View>
       </View>
     </View>
   )

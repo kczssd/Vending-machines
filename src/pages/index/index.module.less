@@ -105,14 +105,17 @@
 
         }
     }
-    .goodsList{
-        width: 90%;
-        height: 90vh;
+    .goodsContent{
+        width: 90vw;
+        height: 76vh;
         margin: 0 auto;
-        max-height: calc(100vh - 140px);
         overflow-y: scroll;
-        display: flex;
-        flex-wrap: wrap;
-        &::-webkit-scrollbar{display:none}
+        .goodsList{
+            width: 90vw;
+            min-height: 76vh;
+            column-count: 2;
+            column-gap: 10px;
+            &::-webkit-scrollbar{display:none}
+        }
     }
 }

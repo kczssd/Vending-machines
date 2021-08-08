@@ -68,18 +68,20 @@
 }
 @media screen and (max-width:992px) {
     .content{
-        width: calc(50% - 20px);
-        height: 30vh;
-        margin: 10px;
+        // width: calc(50vw - 20px);
+        width: 45vw;
+        // margin: 10px;
         background-color: black;
-        overflow: hidden;
+        // overflow: hidden;
         position: relative;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
+        break-inside:avoid;
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: space-around;
         .cold{
             position: absolute;
-            top: 0;
+            top: 10px;
+            left: 10px;
             font-size: 23px;
             text-align: center;
             line-height: 40px;
@@ -92,33 +94,35 @@
         }
         .img{
             width: calc(100% - 20px);
-            height: 20vh;
+            // height: auto;
             display: block;
-            margin: 0 auto;
+            margin: 10px auto;
         }
         .info{
             font-size: 18px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            .name{
-                color: #fff;
-                font-weight: bold;
-            }
-            .price{
-                color: #fff;
-                width: auto;
-                height: auto;
-                font-size: 30px;
-                font-weight: bold;
-                position: relative;
-                margin-left: 25px;
-                &::after{
-                    content: '￥';
-                    font-size: 18px;
-                    position: absolute;
-                    top: 0px;
-                    left: -25px;
+            .textGroup{
+                .name{
+                    color: #fff;
+                    font-weight: bold;
+                }
+                .price{
+                    color: #fff;
+                    width: auto;
+                    height: auto;
+                    font-size: 30px;
+                    font-weight: bold;
+                    position: relative;
+                    margin-left: 25px;
+                    &::after{
+                        content: '￥';
+                        font-size: 18px;
+                        position: absolute;
+                        top: 0px;
+                        left: -25px;
+                    }
                 }
             }
             .buy{
@@ -126,7 +130,8 @@
                 height: 56px;
                 font-size: 23px;
                 letter-spacing: 4px;
-                margin-bottom: 10px;
+                margin-bottom: 6px;
+                margin-right: 5px;
                 text-align: center;
                 background-color: #fff;
                 color: #000;
