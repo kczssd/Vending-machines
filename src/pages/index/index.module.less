@@ -84,25 +84,78 @@
             }
             .type{
                 color: #7a7693;
-                width: auto;
                 height: 100%;
                 margin-right:40px;
                 display: flex;
                 align-items: center;
                 padding: 10px 15px;
-                border-radius: 25px;
+                position: relative;
+            }
+            .typeActive{
+                color:#fff;
+                height: 100%;
+                margin-right:40px;
+                display: flex;
+                align-items: center;
+                padding: 10px 15px;
+                position: relative;
             }
             .icon{
                 max-width: 50px;
                 height: 50px;
+                position: relative;
+                padding-bottom: 20px;
+                &::before{
+                    content: "";
+                    position: absolute;
+                    top: 60px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 0%;
+                    height: 100%;
+                    border-bottom: 4px solid #fff;
+                    transition: all 0.5s;
+                }
+            }
+            .iconActive{
+                max-width: 50px;
+                height: 50px;
+                position: relative;
+                padding-bottom: 20px;
+                &::before{
+                    z-index: 999;
+                    content: "";
+                    position: absolute;
+                    top: 60px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 100%;
+                    border-bottom: 4px solid #fff;
+                    transition: all 0.5s;
+                }
             }
             .text{
+                margin-bottom: 20px;
                 margin-left: 10px;
                 font-weight: bold;
                 font-size: 26px;
                 white-space: nowrap;
+                width: 0;
+                transform: translateX(-60%);
+                transition: all 0.3s;
+                opacity: 0;
             }
-
+            .textActive{
+                margin-bottom: 20px;
+                margin-left: 10px;
+                font-weight: bold;
+                font-size: 26px;
+                white-space: nowrap;
+                // width: auto;
+                transform: translateX(0);
+                transition: all 0.3s;
+                opacity: 1;
+            }
         }
     }
     .goodsContent{

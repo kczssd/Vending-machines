@@ -52,7 +52,6 @@ export default () => {
   // },[])
   useEffect(() => {
     getGoods();
-
   }, [MachineID])
   return (
     <View className={styles.mainPage}>
@@ -84,18 +83,14 @@ export default () => {
                 <RadioGroup key={"type" + index} >
                   <Radio id={item} className={styles.radio} checked={index===current}/>
                   <Label
-                    style={index===current?{
-                      color:'#fff',
-                      border:'2px solid #fff'
-                    }:{}}
                     for={item}
-                    className={styles.type}
+                    className={index===current?styles.typeActive:styles.type}
                     onClick={(e) => {
                       setcurrent(index);
                     }}
                   >
-                    <Image mode="aspectFit" className={styles.icon} src={imgArray[current === index ? 'light' : 'dark'][index]} />
-                    <View className={styles.text} style={{ display: current === index ? 'inline' : 'none' }}>{item}</View>
+                    <Image mode="aspectFit" className={index===current?styles.iconActive:styles.icon} src={imgArray[current === index ? 'light' : 'dark'][index]} />
+                    <View className={current === index?styles.textActive:styles.text} >{item}</View>
                   </Label>
                 </RadioGroup>)
             }
