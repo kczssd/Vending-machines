@@ -166,8 +166,13 @@
         .goodsList{
             width: 90vw;
             min-height: 76vh;
-            column-count: 2;
-            column-gap: 10px;
+            //flex布局
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            // 瀑布式布局
+            // column-count: 2;
+            // column-gap: 10px;
             &::-webkit-scrollbar{display:none}
         }
     }

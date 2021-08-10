@@ -1,11 +1,21 @@
-import Taro ,{ navigateTo } from '@tarojs/taro';
+import Taro from '@tarojs/taro';
 import request from './request'
 
-export async function getPay(sku: number, id: string): Promise<void> {
+const debounce = (fn:Function,delay:number):Function=>{
+    let timer:NodeJS.Timeout;
+    return (...args:any)=>{
+        if(timer){
+            clearTimeout(timer)
+        }
+        timer = setTimeout(()=>{
+            fn(...args)
+        },delay)
+    }
+}
+
+async function Pay(sku: number, id: string): Promise<void> {
     let codeData = await Taro.login();
-    console.log(codeData);
-    
-    let { data: { status, openid, payMini } } = await request({
+    let { data: { status, payMini } } = await request({
         method: "POST",
         url: "/getLogin",
         data: {
@@ -54,16 +64,18 @@ export async function getPay(sku: number, id: string): Promise<void> {
     }
 }
 
-export async function checkSku(sku:number,id:string):Promise<void>{
-    let {data:{qrcodeAddress,userId}} = await request({
-        method:"POST",
-        url:"/checkSkuAvailability",
-        data:{
-        machineId:id,
-        sku
-        }
-    })
-    navigateTo({
-        url:`/pages/pay/index?QRCode=${qrcodeAddress}&sku=${sku}&id=${userId}`
-    })
-}
+export const getPay = debounce(Pay,500)
+
+// export async function checkSku(sku:number,id:string):Promise<void>{
+//     let {data:{qrcodeAddress,userId}} = await request({
+//         method:"POST",
+//         url:"/checkSkuAvailability",
+//         data:{
+//         machineId:id,
+//         sku
+//         }
+//     })
+//     navigateTo({
+//         url:`/pages/pay/index?QRCode=${qrcodeAddress}&sku=${sku}&id=${userId}`
+//     })
+// }

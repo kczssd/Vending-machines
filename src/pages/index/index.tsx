@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {onLocationChange,getSetting,authorize,getUserProfile, getLocation} from '@tarojs/taro'
+import {getUserProfile} from '@tarojs/taro'
 import { Label, Radio, RadioGroup, View,Image, Picker } from '@tarojs/components'
 import styles from './index.module.less'
 import GoodsItem from '../../modules/goods/index'
@@ -9,7 +9,6 @@ import useInfo from '../../tools/basicInfo'
 import imgArray from '../../tools/imgArray'
 import person from '../../img/person.png'
 import location from '../../img/location.png'
-
 
 export default () => {
   const [current, setcurrent] = useState(0);
@@ -24,32 +23,9 @@ export default () => {
       method: "POST",
       url: "/getInventory",
       data: { machineId: MachineID }
-    }); 
+    });
     setgoods(inventories);
   }
-  // useEffect(()=>{
-  //   getSetting({
-  //     success: function (res) {
-  //       if (!res.authSetting['scope.userLocation']) {
-  //         authorize({
-  //           scope: 'scope.userLocation',
-  //           success: function () {
-  //             getLocation({
-  //               type: 'wgs84',
-  //               success: function (res) {
-  //                 console.log(res);
-  //                 // const latitude = res.latitude
-  //                 // const longitude = res.longitude
-  //                 // const speed = res.speed
-  //                 // const accuracy = res.accuracy
-  //               }
-  //             })
-  //           }
-  //         })
-  //       }
-  //     }
-  //   })
-  // },[])
   useEffect(() => {
     getGoods();
   }, [MachineID])
@@ -58,7 +34,7 @@ export default () => {
       <View className={styles.head}>
         <Image mode="aspectFit" onClick={()=>{
           getUserProfile({
-            desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+            desc: '用于完善个人信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
             success: (res) => {
               const {userInfo:{avatarUrl}} = res;
               setAvater(avatarUrl)
@@ -85,7 +61,7 @@ export default () => {
                   <Label
                     for={item}
                     className={index===current?styles.typeActive:styles.type}
-                    onClick={(e) => {
+                    onClick={() => {
                       setcurrent(index);
                     }}
                   >
