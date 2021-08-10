@@ -1,70 +1,76 @@
 import Taro from '@tarojs/taro';
 import request from './request'
 
-const debounce = (fn:Function,delay:number):Function=>{
-    let timer:NodeJS.Timeout;
-    return (...args:any)=>{
-        if(timer){
-            clearTimeout(timer)
+export class getPay{
+    private static instance: getPay|null = null;
+    sku: number;
+    id: string;
+    private constructor(sku:number,id:string) {
+        this.sku = sku;
+        this.id = id;
+        this.pay();
+    }
+    public static getInstance(sku:number,id:string): getPay {
+        if (!getPay.instance) {
+            getPay.instance = new getPay(sku,id);
         }
-        timer = setTimeout(()=>{
-            fn(...args)
-        },delay)
+        return getPay.instance;
+    }
+    public async pay() {
+        let codeData = await Taro.login();
+        console.log(codeData);
+        let { data: { status, payMini } } = await request({
+            method: "POST",
+            url: "/getLogin",
+            data: {
+                code: codeData.code,
+                machineId: this.id,
+                sku:this.sku
+            }
+        })
+        if (status == 200) {
+            let {
+                timeStamp,
+                nonceStr,
+                prepayId,
+                signType,
+                paySign
+            } = payMini;
+            await Taro.requestPayment({
+                timeStamp:timeStamp,
+                nonceStr:nonceStr,
+                package: 'prepay_id='+prepayId,
+                signType:signType,
+                paySign:paySign,
+                success:()=>{
+                    getPay.instance=null;
+                    Taro.showModal({
+                        title: '操作提示',
+                        content: '支付成功,正在出货',
+                        showCancel: false,
+                        confirmText: '确定'
+                    })
+                },
+                fail:()=>{
+                    getPay.instance=null;
+                    Taro.showModal({
+                        title: '操作提示',
+                        content: '支付失败，请重新尝试',
+                        showCancel: false,
+                        confirmText: '确定'
+                    })
+                }
+            })
+        } else {
+            Taro.showModal({
+                title: '操作提示',
+                content: '支付失败，请检查网络后重试',
+                showCancel: false,
+                confirmText: '确定'
+            })
+        }
     }
 }
-
-async function Pay(sku: number, id: string): Promise<void> {
-    let codeData = await Taro.login();
-    let { data: { status, payMini } } = await request({
-        method: "POST",
-        url: "/getLogin",
-        data: {
-            code: codeData.code,
-            machineId: id,
-            sku
-        }
-    })
-    if (status == 200) {
-        let {
-            timeStamp,
-            nonceStr,
-            prepayId,
-            signType,
-            paySign
-        } = payMini;
-        let payData = await Taro.requestPayment({
-            timeStamp:timeStamp,
-            nonceStr:nonceStr,
-            package: 'prepay_id='+prepayId,
-            signType:signType,
-            paySign:paySign
-        })
-        if (payData && payData.errMsg === 'requestPayment:ok') {
-            Taro.showModal({
-              title: '操作提示',
-              content: '支付成功,正在出货',
-              showCancel: false,
-              confirmText: '确定'
-            })
-          } else {
-            Taro.showModal({
-              title: '操作提示',
-              content: '支付失败，请重新尝试',
-              showCancel: false,
-              confirmText: '确定'
-            })
-          }
-    } else {
-        Taro.showModal({
-            title: '操作提示',
-            content: '支付失败，请检查网络后重试',
-            showCancel: false,
-            confirmText: '确定'
-        })
-    }
-}
-
-export const getPay = debounce(Pay,500)
 
 // export async function checkSku(sku:number,id:string):Promise<void>{
 //     let {data:{qrcodeAddress,userId}} = await request({

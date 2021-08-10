@@ -7,7 +7,8 @@ export default {
     backgroundTextStyle: 'light',
     navigationBarTitleText: 'WeChat',
     navigationStyle:'custom',
-    backgroundColor:'#000'
+    backgroundColor:'#000',
+    disableScroll: true,
   },
   "permission":{
     "scope.userLocation":{

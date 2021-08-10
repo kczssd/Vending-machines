@@ -2,7 +2,7 @@ import { Button, View, Image } from '@tarojs/components';
 import { useRouter, navigateBack } from '@tarojs/taro';
 import {getPay} from '../../tools/pay'
 import useInfo from '../../tools/basicInfo'
-import React from 'react';
+import React, { useState } from 'react';
 import styles from "./index.module.less"
 import imgArray from '../../tools/imgArray'
 import back from '../../img/back.png'
@@ -11,7 +11,14 @@ export default () => {
     const { MachineID } = useInfo();
     const { params: { sku, name, price, type, imageUrl } } = useRouter();
     const Types = ["水", "罐装", "果汁", "牛奶", "茶", "酒"];
-
+    const [Loading, setLoading] = useState(false);
+    function showLoading(){
+        setLoading(true);
+        let timer = setTimeout(()=>{
+        setLoading(false);
+        clearTimeout(timer)
+        },1000)
+    }
     return (
         <View className={styles.main}>
             <View onClick={() => navigateBack()} className={styles.back}>
@@ -23,7 +30,7 @@ export default () => {
                     <View className={styles.h3}>
                         {name}
                         <View className={styles.cold}>
-                            Cold
+                            冷
                         </View>
                     </View>
                     <View className={styles.h6}>{name}</View>
@@ -38,7 +45,14 @@ export default () => {
                         <View>总价</View>
                     </View>
                 </View>
-                <Button onClick={() => { getPay(parseInt(sku!), MachineID!) }} className={styles.pay}>购买</Button>
+                <Button 
+                loading={Loading}
+                onClick={(e) => { 
+                    e.preventDefault();
+                    e.stopPropagation();
+                    showLoading();
+                    getPay.getInstance(parseInt(sku!), MachineID!) 
+                }} className={styles.pay}>购买</Button>
             </View>
         </View>
     );
