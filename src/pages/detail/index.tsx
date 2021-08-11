@@ -24,7 +24,9 @@ export default () => {
             <View onClick={() => navigateBack()} className={styles.back}>
                 <Image className={styles.backIcon} mode="aspectFit" src={back}></Image>
             </View>
-            <Image mode="widthFix" className={styles.imgInfo} src={imageUrl as string} />
+            <View className={styles.img}>
+                <Image mode="aspectFit" className={styles.imgInfo} src={imageUrl as string} />
+            </View>
             <View className={styles.content}>
                 <View className={styles.title}>
                     <View className={styles.h3}>
