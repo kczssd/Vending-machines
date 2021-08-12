@@ -62,9 +62,10 @@ export class getPay{
                 }
             })
         } else {
+            getPay.instance=null;
             Taro.showModal({
                 title: '操作提示',
-                content: '支付失败，请检查网络后重试',
+                content: '库存不足',
                 showCancel: false,
                 confirmText: '确定'
             })
