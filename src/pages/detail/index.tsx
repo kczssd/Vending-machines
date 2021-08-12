@@ -1,16 +1,16 @@
-import { Button, View, Image } from '@tarojs/components';
+import { Button, View, Image,Text } from '@tarojs/components';
 import { useRouter, navigateBack } from '@tarojs/taro';
 import {getPay} from '../../tools/pay'
 import useInfo from '../../tools/basicInfo'
 import React, { useState } from 'react';
 import styles from "./index.module.less"
-import imgArray from '../../tools/imgArray'
+// import imgArray from '../../tools/imgArray'
 import back from '../../img/back.png'
 
 export default () => {
     const { MachineID } = useInfo();
     const { params: { sku, name, price, type, imageUrl } } = useRouter();
-    const Types = ["水", "罐装", "果汁", "牛奶", "茶", "酒"];
+    const Types = ["水", "饮料", "酒水"];
     const [Loading, setLoading] = useState(false);
     function showLoading(){
         setLoading(true);
@@ -32,15 +32,19 @@ export default () => {
                     <View className={styles.h3}>
                         {name}
                         <View className={styles.cold}>
-                            冷
+                            冷饮
                         </View>
                     </View>
                     <View className={styles.h6}>{name}</View>
                 </View>
                 <View className={styles.info}>
                     <View className={styles.type}>
-                        <Image className={styles.typeIcon} mode="aspectFit" src={imgArray['dark'][parseInt(type!)]} />
-                        <View>{Types[parseInt(type!)]}</View>
+                    {
+                     [<View className={`${styles.typeIcon} iconfont`}>&#xe61c;</View>,
+                      <View className={`${styles.typeIcon} iconfont`}>&#xe601;</View>,
+                      <View className={`${styles.typeIcon} iconfont`}>&#xe739;</View>][parseInt(type!)]
+                    }
+                        <View style={type=="2"?{transform:"translateX(2px)"}:{}} className={styles.typeText}>{Types[parseInt(type!)]}</View>
                     </View>
                     <View className={styles.price}>
                         {(parseInt(price!) / 100).toFixed(2)}
@@ -54,7 +58,7 @@ export default () => {
                     e.stopPropagation();
                     showLoading();
                     getPay.getInstance(parseInt(sku!), MachineID!) 
-                }} className={styles.pay}>购买</Button>
+                }} className={styles.pay}>支付<Text className={`${styles.payIcon} .iconfont`}>&#xe602;</Text></Button>
             </View>
         </View>
     );

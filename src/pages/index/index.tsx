@@ -6,7 +6,6 @@ import GoodsItem from '../../modules/goods/index'
 import useGoods from '../../tools/goods'
 import request from '../../tools/request'
 import useInfo from '../../tools/basicInfo'
-import imgArray from '../../tools/imgArray'
 import person from '../../img/person.png'
 import location from '../../img/location.png'
 
@@ -14,7 +13,7 @@ export default () => {
   const [current, setcurrent] = useState(0);
   const positionArray = ["m100","m102"];
   const {MachineID,setMachineID} = useInfo();
-  const Types = ["水", "罐装", "果汁", "牛奶", "茶", "酒"];
+  const Types = ["水", "饮料", "酒水"];
   const { goods, setgoods } = useGoods();
   const [Avatar,setAvater] = useState(person)
 
@@ -56,7 +55,7 @@ export default () => {
           {
             Types.map((item, index) => {
               return (
-                <RadioGroup key={"type" + index} >
+                <RadioGroup key={"type" + index}  className={index===current?styles.radiogroupActive:styles.radiogroup}>
                   <Radio id={item} className={styles.radio} checked={index===current}/>
                   <Label
                     for={item}
@@ -65,7 +64,12 @@ export default () => {
                       setcurrent(index);
                     }}
                   >
-                    <Image mode="aspectFit" className={index===current?styles.iconActive:styles.icon} src={imgArray[current === index ? 'light' : 'dark'][index]} />
+                    {/* <Image mode="aspectFit" className={index===current?styles.iconActive:styles.icon} src={imgArray[current === index ? 'light' : 'dark'][index]} /> */}
+                    {
+                     [<View className={`${index===current?styles.iconActive:styles.icon} iconfont`}>&#xe61c;</View>,
+                      <View className={`${index===current?styles.iconActive:styles.icon} iconfont`}>&#xe601;</View>,
+                      <View className={`${index===current?styles.iconActive:styles.icon} iconfont`}>&#xe739;</View>][index]
+                    }
                     <View className={current === index?styles.textActive:styles.text} >{item}</View>
                   </Label>
                 </RadioGroup>)

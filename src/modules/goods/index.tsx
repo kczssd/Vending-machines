@@ -30,7 +30,7 @@ export default ({
           url:`/pages/detail/index?sku=${sku}&name=${name}&stock=${stock}&price=${price}&type=${type}&imageUrl=${imageDetailUrl}`
         })}/>
       <View className={styles.cold}>
-      冷
+      冷饮
       </View>
       <View className={styles.info}>
         <View className={styles.textGroup}>
